@@ -43,3 +43,4 @@ C:\Users\terril\Documents\GitHub\EMGUCV_3.3_StereoImaging-\StereoImaging\obj\x86
 C:\Users\terril\Documents\GitHub\EMGUCV_3.3_StereoImaging-\StereoImaging\obj\x86\Debug\StereoImaging.csproj.CoreCompileInputs.cache
 C:\Users\terril\Documents\GitHub\EMGUCV_3.3_StereoImaging-\StereoImaging\obj\x86\Debug\StereoImaging.exe
 C:\Users\terril\Documents\GitHub\EMGUCV_3.3_StereoImaging-\StereoImaging\obj\x86\Debug\StereoImaging.pdb
+C:\Users\terril\Documents\GitHub\EMGUCV_3.3_StereoImaging-\StereoImaging\obj\x86\Debug\StereoImaging.csprojResolveAssemblyReference.cache

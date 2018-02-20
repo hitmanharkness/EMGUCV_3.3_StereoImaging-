@@ -17,7 +17,7 @@ using Emgu.CV.Structure;
 
 //DiresctShow
 using DirectShowLib;
-
+using Emgu.CV.CvEnum;
 
 namespace StereoImaging
 {
@@ -77,10 +77,25 @@ namespace StereoImaging
             SavingFrames
         }
         Mode currentMode = Mode.SavingFrames;
+
+
+
+        private Mat _frame;
+        private Mat _grayFrame_s1;
+        private Mat _grayFrame_s2;
+
+
+
         #endregion
         public Form1()
         {
             InitializeComponent();
+
+            _frame = new Mat();
+            _grayFrame_s1 = new Mat();
+            _grayFrame_s2 = new Mat();
+
+
 
             // ?????????????????????????????????????????
             //set up chessboard drawing array
@@ -129,10 +144,19 @@ namespace StereoImaging
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="arg"></param>
+        /// 
+
         private void ProcessFrame(object sender, EventArgs arg)
         {
             #region Frame Aquasition
+            _Capture1.Retrieve(_frame, 0);
+            CvInvoke.CvtColor(_frame, _grayFrame_s1, ColorConversion.Bgr2Gray);
+            _Capture2.Retrieve(_frame, 0);
+            CvInvoke.CvtColor(_frame, _grayFrame_s2, ColorConversion.Bgr2Gray);
+
+
             //Aquire the frames or calculate two frames from one camera
+
             //frame_S1 = _Capture1.RetrieveBgrFrame();
             //Gray_frame_S1 = frame_S1.Convert<Gray,Byte>();
             //frame_S2 = _Capture2.RetrieveBgrFrame();
@@ -143,6 +167,7 @@ namespace StereoImaging
             if (currentMode == Mode.SavingFrames)
             {
                 //Find the chessboard in bothe images
+                corners_Left = CameraCalibration.FindChessboardCorners(_grayFrame_s1, patternSize, Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH);
                 //corners_Left = CameraCalibration.FindChessboardCorners(Gray_frame_S1, patternSize, Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH);
                 //corners_Right = CameraCalibration.FindChessboardCorners(Gray_frame_S2, patternSize, Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH);
 
