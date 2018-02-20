@@ -1,3 +1,4 @@
 
 *.dll
 *.exe
+.vs/StereoImaging/v15/Server/sqlite3/db.lock

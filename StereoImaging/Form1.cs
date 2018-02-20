@@ -24,14 +24,15 @@ namespace StereoImaging
     public partial class Form1 : Form
     {
         #region Devices
-        //Capture _Capture1;
-        //Capture _Capture2;
+        VideoCapture _Capture1, _Capture2;
+         //Capture _Capture1;
+         //Capture _Capture2;
         #endregion
-        
+
         #region Image Processing
 
-        //Frames
-        Image<Bgr, Byte> frame_S1;
+         //Frames
+         Image<Bgr, Byte> frame_S1;
         Image<Gray, Byte> Gray_frame_S1;
         Image<Bgr, Byte> frame_S2;
         Image<Gray, Byte> Gray_frame_S2;
@@ -106,13 +107,20 @@ namespace StereoImaging
             else if (WebCams.Length >= 2)
             {
                 if (WebCams.Length > 2) MessageBox.Show("More than 2 cameras detected. Stero Imaging will be performed using " + WebCams[0].Device_Name + " and " + WebCams[1].Device_Name);
+
+
+                _Capture1 = new VideoCapture(0);
+                _Capture1.ImageGrabbed += ProcessFrame;
+
+                _Capture2 = new VideoCapture(1);
+
                 //_Capture1 = new Capture(WebCams[0].Device_ID);
                 //_Capture2 = new Capture(WebCams[1].Device_ID);
                 //We will only use 1 frame ready event this is not really safe but it fits the purpose
                 //_Capture1.ImageGrabbed += ProcessFrame;
 
-                //_Capture2.Start(); //We make sure we start Capture device 2 first
-                //_Capture1.Start();
+                _Capture2.Start(); //We make sure we start Capture device 2 first
+                _Capture1.Start();
             }
         }
 
@@ -126,9 +134,9 @@ namespace StereoImaging
             #region Frame Aquasition
             //Aquire the frames or calculate two frames from one camera
             //frame_S1 = _Capture1.RetrieveBgrFrame();
-            Gray_frame_S1 = frame_S1.Convert<Gray,Byte>();
+            //Gray_frame_S1 = frame_S1.Convert<Gray,Byte>();
             //frame_S2 = _Capture2.RetrieveBgrFrame();
-            Gray_frame_S2 = frame_S2.Convert<Gray,Byte>();
+            //Gray_frame_S2 = frame_S2.Convert<Gray,Byte>();
             #endregion
 
             #region Saving Chessboard Corners in Buffer
@@ -236,8 +244,8 @@ namespace StereoImaging
             }
             #endregion
             //display image
-            //Video_Source1.Image = frame_S1.ToBitmap();
-            //Video_Source2.Image = frame_S2.ToBitmap();
+            Video_Source1.Image = frame_S1.ToBitmap();
+            Video_Source2.Image = frame_S2.ToBitmap();
 
 
         }
